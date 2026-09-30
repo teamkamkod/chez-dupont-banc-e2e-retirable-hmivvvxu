@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chez Dupont</title>
+<meta name="description" content="Découvrez Chez Dupont, un lieu convivial où partager de bons moments. Retrouvez nos horaires, notre menu et nos avis clients.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2E6E6A;
+    --secondary: #C97B5A;
+    --background: #F7F1E6;
+    --text: #2B2620;
+    --cta: #C97B5A;
+    --font-heading: 'Fraunces', serif;
+    --font-body: 'Karla', sans-serif;
+    --radius: 6px;
+    --shadow-soft: 0 8px 40px rgba(44,38,32,0.10), 0 2px 8px rgba(44,38,32,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ── FADE-IN ANIMATION ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── NAVIGATION ── */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(247,241,230,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(46,110,106,0.12);
+    box-shadow: 0 2px 16px rgba(44,38,32,0.06);
+  }
+
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    position: relative;
+  }
+
+  .nav-logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  nav ul li a {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  nav ul li a:hover { color: var(--primary); }
+
+  nav ul li a.cta {
+    background: var(--cta);
+    color: #fff;
+    padding: 0.5rem 1.2rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  nav ul li a.cta:hover {
+    background: #b56a49;
+    transform: translateY(-1px);
+  }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+    z-index: 110;
+  }
+
+  .burger span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ── MOBILE NAV ── */
+  @media (max-width: 767px) {
+    .burger { display: flex; }
+
+    nav ul {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 68px;
+      left: 0; right: 0;
+      background: rgba(247,241,230,0.98);
+      padding: 1.5rem 2rem 2rem;
+      gap: 1.2rem;
+      border-bottom: 2px solid rgba(46,110,106,0.15);
+      box-shadow: 0 8px 24px rgba(44,38,32,0.10);
+    }
+
+    nav ul.open {
+      display: flex;
+    }
+
+    nav ul li a.cta {
+      display: inline-block;
+    }
+  }
+
+  @media (min-width: 768px) {
+    nav ul {
+      display: flex !important;
+      flex-direction: row;
+      position: static;
+      background: none;
+      padding: 0;
+      box-shadow: none;
+      border: none;
+    }
+  }
+
+  /* ── BUTTONS ── */
+  .cta {
+    display: inline-block;
+    background: var(--cta);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 16px rgba(201,123,90,0.25);
+  }
+
+  .cta:hover {
+    background: #b56a49;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,123,90,0.30);
+  }
+
+  /* ── SECTION COMMONS ── */
+  section {
+    padding: 5rem 1.5rem;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-heading {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-divider {
+    width: 56px;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: 2px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, rgba(43,38,32,0.72) 0%, rgba(43,38,32,0.38) 55%, rgba(43,38,32,0.10) 100%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 640px;
+    margin-left: max(1.5rem, calc((100vw - 1100px)/2));
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(201,123,90,0.18);
+    border: 1px solid rgba(201,123,90,0.5);
+    color: #f0c9b0;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-heading {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    color: #fff;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-outline {
+    display: inline-block;
+    background: transparent;
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    border: 2px solid rgba(255,255,255,0.6);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .cta-outline:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: #fff;
+  }
+
+  /* ── ABOUT ── */
+  #apropos {
+    background: #fff;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about-img-wrap {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: visible;
+  }
+
+  /* corner_frame decoration */
+  .corner-frame {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .corner-frame img {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+  }
+
+  .corner-frame::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    width: 70px;
+    height: 70px;
+    border-top: 3px solid var(--secondary);
+    border-left: 3px solid var(--secondary);
+    border-radius: 2px 0 0 0;
+    z-index: 2;
+  }
+
+  .corner-frame::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    right: -14px;
+    width: 70px;
+    height: 70px;
+    border-bottom: 3px solid var(--primary);
+    border-right: 3px solid var(--primary);
+    border-radius: 0 0 2px 0;
+    z-index: 2;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .about-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: var(--background);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-top: 1.5rem;
+    border-left: 3px solid var(--secondary);
+  }
+
+  .about-address svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .about-address span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  @media (min-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* ── FEATURED MENU ── */
+  #menu {
+    background: var(--background);
+  }
+
+  .menu-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .menu-intro .section-divider {
+    margin: 0 auto 2.5rem;
+  }
+
+  .menu-placeholder {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  .menu-placeholder p {
+    font-size: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .menu-placeholder svg {
+    margin: 0 auto;
+  }
+
+  /* ── REVIEWS ── */
+  #avis {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  #avis .section-heading {
+    color: #fff;
+  }
+
+  #avis .section-label {
+    color: rgba(255,255,255,0.65);
+  }
+
+  #avis .section-divider {
+    background: var(--secondary);
+  }
+
+  .reviews-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .reviews-intro .section-divider {
+    margin: 0 auto 2.5rem;
+  }
+
+  .reviews-placeholder {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    color: rgba(255,255,255,0.75);
+  }
+
+  .reviews-placeholder p {
+    font-size: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  /* ── GALLERY ── */
+  #galerie {
+    background: #fff;
+  }
+
+  .gallery-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .gallery-intro .section-divider {
+    margin: 0 auto 2.5rem;
+  }
+
+  /* asymmetric gallery */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .gallery-item.corner-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    aspect-ratio: 4/3;
+  }
+
+  .gallery-item.corner-frame:hover img {
+    transform: scale(1.04);
+  }
+
+  @media (min-width: 600px) {
+    .gallery-grid {
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .gallery-item:nth-child(1) {
+      grid-row: 1 / 3;
+    }
+
+    .gallery-item.corner-frame img {
+      aspect-ratio: unset;
+      height: 100%;
+      min-height: 220px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .gallery-grid {
+      grid-template-columns: 2fr 1fr;
+      min-height: 420px;
+    }
+  }
+
+  /* ── HOURS & LOCATION ── */
+  #horaires {
+    background: var(--background);
+  }
+
+  .hours-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .hours-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .hours-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.97rem;
+  }
+
+  .hours-table tr {
+    border-bottom: 1px solid rgba(46,110,106,0.12);
+  }
+
+  .hours-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .hours-table td {
+    padding: 0.75rem 0.5rem;
+    vertical-align: middle;
+  }
+
+  .hours-table td:first-child {
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: capitalize;
+    width: 45%;
+  }
+
+  .hours-table td:last-child {
+    color: var(--text);
+  }
+
+  .map-wrap {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    height: 320px;
+  }
+
+  .map-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .address-block {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .address-block svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .address-block span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .phone-block {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .phone-block a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary);
+    transition: color 0.2s;
+  }
+
+  .phone-block a:hover {
+    color: var(--secondary);
+  }
+
+  /* ── CONTACT FORM ── */
+  #contact {
+    background: #fff;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1.4fr;
+      align-items: start;
+    }
+  }
+
+  .contact-info h3 {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .contact-info p {
+    font-size: 0.97rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.95rem;
+  }
+
+  .contact-detail svg {
+    flex-shrink: 0;
+    color: var(--secondary);
+  }
+
+  .contact-detail a {
+    color: var(--primary);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .contact-detail a:hover {
+    color: var(--secondary);
+  }
+
+  form {
+    background: var(--background);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .form-group {
+    margin-bottom: 1.4rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.45rem;
+    letter-spacing: 0.03em;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1.5px solid rgba(46,110,106,0.22);
+    border-radius: var(--radius);
+    background: #fff;
+    font-family: var(--font-body);
+    font-size: 0.97rem;
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(46,110,106,0.12);
+  }
+
+  .form-group textarea {
+    min-height: 130px;
+    resize: vertical;
+  }
+
+  form .cta {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1rem;
+  }
+
+  /* ── TRUST SIGNALS ── */
+  #confiance {
+    background: var(--background);
+  }
+
+  .trust-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .trust-intro .section-divider {
+    margin: 0 auto 2.5rem;
+  }
+
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .trust-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .trust-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  .trust-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .trust-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(44,38,32,0.13);
+  }
+
+  .trust-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(46,110,106,0.10);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.85rem;
+    color: var(--primary);
+  }
+
+  .trust-card p {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.75);
+    padding: 3rem 1.5rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1.5fr 1fr 1fr;
+    }
+  }
+
+  .footer-brand .nav-logo {
+    color: #fff;
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-brand p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .footer-col ul {
+    list-style: none;
+  }
+
+  .footer-col ul li {
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-col ul li a {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    transition: color 0.2s;
+  }
+
+  .footer-col ul li a:hover {
+    color: var(--secondary);
+  }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.10);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .footer-bottom a {
+    color: rgba(255,255,255,0.45);
+    transition: color 0.2s;
+  }
+
+  .footer-bottom a:hover {
+    color: var(--secondary);
+  }
+
+/* ── GARDE-FOU NAV (post-traitement deterministe, pas le LLM) ────────────────
+   Le modele produit typiquement `nav ul.open { flex-direction:column }` SANS
+   media query. Sa specificite (0,2,1) bat la regle desktop `nav ul` (0,0,2)
+   quand celle-ci n'a pas !important sur flex-direction : au retour en desktop
+   apres ouverture du burger, le menu reste empile en colonne (menu casse).
+   Cette regle force l'etat desktop quel que soit l'etat de .open. */
+@media (min-width: 768px) {
+  nav ul, nav ul.open, nav.open ul, nav ul[data-open="true"] {
+    flex-direction: row !important;
+    position: static !important;
+    display: flex !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    width: auto !important;
+  }
+  .burger, button.burger, .nav-toggle, #burger, .burger-menu { display: none !important; }
+}
+</style>
+<meta name="robots" content="noindex">
+</head>
+<body>
+
+<!-- ── HEADER / NAV ── -->
+<header>
+  <nav aria-label="Navigation principale">
+    <a href="#hero" class="nav-logo">Chez Dupont</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="nav-menu">
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#horaires">Horaires</a></li>
+      <li><a href="#contact" class="cta">Réserver</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ── HERO ── -->
+<section id="hero" aria-label="Accueil">
+  <div class="hero-bg" role="img" aria-label="Ambiance chaleureuse de Chez Dupont"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content fade-in">
+    <span class="hero-tag">Commerce local · Bordeaux</span>
+    <h1 class="hero-heading">Bienvenue<br>Chez Dupont</h1>
+    <p class="hero-sub">Un lieu chaleureux où il fait bon se retrouver, partager et savourer de bons moments.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="cta" aria-label="Réserver votre table chez Dupont">Réservez votre table</a>
+      <a href="#apropos" class="cta-outline" aria-label="Découvrir nos offres">Découvrir nos offres</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── À PROPOS ── -->
+<section id="apropos" aria-label="À propos de Chez Dupont">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-in">
+        <div class="corner-frame">
+          <img src="assets/gallery-1.jpg" alt="Intérieur chaleureux de Chez Dupont à Bordeaux" loading="lazy">
+        </div>
+      </div>
+      <div class="about-text fade-in">
+        <span class="section-label">Notre histoire</span>
+        <h2 class="section-heading">À propos de Chez Dupont</h2>
+        <div class="section-divider"></div>
+        <p>Chez Dupont est un établissement convivial où l'on aime partager de bons moments autour d'une table. Notre équipe vous accueille avec le sourire dans une ambiance chaleureuse et décontractée.</p>
+        <p>Situé en plein cœur de Bordeaux, nous mettons un point d'honneur à vous offrir un service attentionné et des produits de qualité, dans un cadre authentique qui vous donnera envie de revenir.</p>
+        <div class="about-address">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C97B5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>45 Rue Notre Dame, 33000 Bordeaux, France</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED MENU ── -->
+<section id="menu" aria-label="Nos incontournables">
+  <div class="section-inner">
+    <div class="menu-intro fade-in">
+      <span class="section-label">À la carte</span>
+      <h2 class="section-heading">Nos incontournables</h2>
+      <div class="section-divider"></div>
+      <p>Venez découvrir notre sélection en salle. Notre équipe se fera un plaisir de vous présenter les spécialités du moment et de vous conseiller selon vos envies.</p>
+    </div>
+    <div class="menu-placeholder fade-in">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2E6E6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+      <p>Notre carte est disponible directement en salle. Contactez-nous pour en savoir plus ou pour réserver votre table.</p>
+      <br>
+      <a href="#contact" class="cta" aria-label="Réserver une table chez Dupont">Réserver une table</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CUSTOMER REVIEWS ── -->
+<section id="avis" aria-label="Avis de nos clients">
+  <div class="section-inner">
+    <div class="reviews-intro fade-in">
+      <span class="section-label">Témoignages</span>
+      <h2 class="section-heading">Ce que disent nos clients</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="reviews-placeholder fade-in">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <p>Venez nous rendre visite et partagez votre expérience. Vos retours nous sont précieux et nous aident à vous accueillir toujours mieux.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALLERY PREVIEW ── -->
+<section id="galerie" aria-label="Galerie photos de Chez Dupont">
+  <div class="section-inner">
+    <div class="gallery-intro fade-in">
+      <span class="section-label">Galerie</span>
+      <h2 class="section-heading">En images</h2>
+      <div class="section-divider"></div>
+      <p>Découvrez l'ambiance et le cadre de Chez Dupont à travers quelques images de notre établissement.</p>
+    </div>
+    <div class="gallery-grid fade-in">
+      <div class="gallery-item corner-frame">
+        <img src="assets/hero.jpg" alt="Vue générale de Chez Dupont, ambiance chaleureuse" loading="lazy">
+      </div>
+      <div class="gallery-item corner-frame">
+        <img src="assets/gallery-1.jpg" alt="Intérieur de Chez Dupont, décoration authentique" loading="lazy">
+      </div>
+      <div class="gallery-item corner-frame">
+        <img src="assets/gallery-2.jpg" alt="Espace convivial de Chez Dupont à Bordeaux" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOURS & LOCATION ── -->
+<section id="horaires" aria-label="Horaires et adresse de Chez Dupont">
+  <div class="section-inner">
+    <span class="section-label fade-in">Informations pratiques</span>
+    <h2 class="section-heading fade-in">Horaires et adresse</h2>
+    <div class="section-divider fade-in"></div>
+    <div class="hours-grid">
+      <div class="fade-in">
+        <table class="hours-table" aria-label="Horaires d'ouverture de Chez Dupont">
+          <tbody>
+            <tr>
+              <td>Lundi</td>
+              <td>12:00 – 23:00</td>
+            </tr>
+            <tr>
+              <td>Mardi</td>
+              <td>12:00 – 23:00</td>
+            </tr>
+            <tr>
+              <td>Mercredi</td>
+              <td>12:00 – 23:00</td>
+            </tr>
+            <tr>
+              <td>Jeudi</td>
+              <td>12:00 – 23:00</td>
+            </tr>
+            <tr>
+              <td>Vendredi</td>
+              <td>12:00 – 23:00</td>
+            </tr>
+            <tr>
+              <td>Samedi</td>
+              <td>12:00 – 23:00</td>
+            </tr>
+            <tr>
+              <td>Dimanche</td>
+              <td>12:00 – 16:00</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="address-block">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C97B5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>45 Rue Notre Dame, 33000 Bordeaux, France</span>
+        </div>
+        <div class="phone-block">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E6E6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+33556814959" aria-label="Appeler Chez Dupont">+33 5 56 81 49 59</a>
+        </div>
+      </div>
+      <div class="fade-in">
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps?q=45+Rue+Notre+Dame,+33000+Bordeaux,+France&output=embed"
+            title="Localisation de Chez Dupont sur Google Maps"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            aria-label="Carte Google Maps indiquant l'emplacement de Chez Dupont au 45 Rue Notre Dame, 33000 Bordeaux">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT FORM ── -->
+<section id="contact" aria-label="Formulaire de contact Chez Dupont">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info fade-in">
+        <span class="section-label">Contactez-nous</span>
+        <h2 class="section-heading">Réservez votre table</h2>
+        <div class="section-divider"></div>
+        <p>Vous souhaitez réserver une table ou obtenir des informations sur notre établissement ? Remplissez le formulaire ci-contre ou contactez-nous directement par téléphone.</p>
+        <div class="contact-detail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C97B5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+33556814959" aria-label="Téléphoner à Chez Dupont">+33 5 56 81 49 59</a>
+        </div>
+        <div class="contact-detail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C97B5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>45 Rue Notre Dame, 33000 Bordeaux, France</span>
+        </div>
+      </div>
+      <div class="fade-in">
+        <form action="https://checkout.kamkod.com/contact" method="POST" aria-label="Formulaire de contact et de réservation">
+          <input type="hidden" name="lead_id" value="ChIJDYs1SHgoVQ0R9fahMivVvXU">
+          <div class="form-group">
+            <label for="name">Nom <span aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" required placeholder="Votre nom complet" aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="email">Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required placeholder="votre@email.fr" aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="message">Message <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" required placeholder="Votre message ou demande de réservation..." aria-required="true"></textarea>
+          </div>
+          <button type="submit" class="cta" aria-label="Envoyer votre message à Chez Dupont">Envoyer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST SIGNALS ── -->
+<section id="confiance" aria-label="Pourquoi choisir Chez Dupont">
+  <div class="section-inner">
+    <div class="trust-intro fade-in">
+      <span class="section-label">Nos engagements</span>
+      <h2 class="section-heading">Pourquoi nous choisir</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card fade-in">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <p>Accueil chaleureux</p>
+      </div>
+      <div class="trust-card fade-in">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <p>Équipe expérimentée</p>
+      </div>
+      <div class="trust-card fade-in">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <p>Produits de qualité</p>
+      </div>
+      <div class="trust-card fade-in">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <p>Paiement CB accepté</p>
+      </div>
+      <div class="trust-card fade-in">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <p>Parking à proximité</p>
+      </div>
+      <div class="trust-card fade-in">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <p>Ouvert 6 jours sur 7</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer aria-label="Pied de page Chez Dupont">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="nav-logo">Chez Dupont</span>
+      <p>Un lieu convivial où il fait bon se retrouver, situé au cœur de Bordeaux. Notre équipe vous accueille avec le sourire du lundi au dimanche.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#apropos" aria-label="Aller à la section À propos">À propos</a></li>
+        <li><a href="#galerie" aria-label="Aller à la galerie photos">Galerie</a></li>
+        <li><a href="#horaires" aria-label="Voir les horaires d'ouverture">Horaires</a></li>
+        <li><a href="#contact" aria-label="Nous contacter ou réserver">Réserver</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+33556814959" aria-label="Appeler Chez Dupont">+33 5 56 81 49 59</a></li>
+        <li><span style="font-size:0.9rem;color:rgba(255,255,255,0.65);">45 Rue Notre Dame</span></li>
+        <li><span style="font-size:0.9rem;color:rgba(255,255,255,0.65);">33000 Bordeaux, France</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Chez Dupont. Tous droits réservés.</span>
+    <span>45 Rue Notre Dame, 33000 Bordeaux</span>
+  </div>
+</footer>
+
+<script>
+  // ── BURGER MENU ──
+  const burger = document.getElementById('burger');
+  const navMenu = document.getElementById('nav-menu');
+
+  burger.addEventListener('click', function () {
+    const isOpen = navMenu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  // Close menu when a link is clicked
+  navMenu.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      navMenu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ── FADE-IN ON SCROLL ──
+  const fadeEls = document.querySelectorAll('.fade-in');
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  fadeEls.forEach(function (el) {
+    observer.observe(el);
+  });
+
+  // Hero fade-in on load
+  window.addEventListener('load', function () {
+    const heroContent = document.querySelector('.hero-content');
+    if (heroContent) {
+      setTimeout(function () {
+        heroContent.classList.add('visible');
+      }, 200);
+    }
+  });
+</script>
+<!-- kamkod:habillage -->
+<meta name="kamkod-version" content="158020a5dff5">
+<div id="kamkod-demo-banner" class="kk-bandeau" data-lead="0bdac10f-7010-51d7-806c-2ca3c2ed6fda" data-echeance="2026-10-02T23:34:02Z" style="position:fixed;bottom:0;left:0;right:0;background:#111;color:#fff;z-index:9999;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;box-shadow:0 -2px 14px rgba(0,0,0,.4);">
+  <div style="max-width:920px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+    <span class="kk-texte" style="flex:1;min-width:200px;font-size:13px;opacity:.8;">Aperçu de votre futur site</span>
+    <span id="kk-offre" class="kk-decompte" data-echeance="2026-10-02T23:34:02Z" style="font-size:14px;font-variant-numeric:tabular-nums;">Aperçu de votre futur site</span>
+    <a class="kk-cta cta" href="https://clic-v2.kamkod.com/api/comportement/clic/0bdac10f-7010-51d7-806c-2ca3c2ed6fda" rel="noopener" style="background:#EA580C;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap;">Activer mon site</a>
+  </div>
+</div>
+<style>#kamkod-demo-banner{opacity:.55;transition:opacity .6s ease}#kamkod-demo-banner.kk-plein{opacity:1}</style>
+<script>(function(){var b=document.getElementById('kamkod-demo-banner');if(!b)return;var plein=false;function allumer(){if(plein){return;}plein=true;b.classList.add('kk-plein');}window.addEventListener('scroll',allumer,{once:true,passive:true});setTimeout(allumer,9000);})();</script>
+<script>window.__KK__={"over":"2026-10-02T23:34:02Z"};</script>
+<script>(function(){
+  var URL = "https://offre.kamkod.com/?lead=0bdac10f-7010-51d7-806c-2ca3c2ed6fda";
+  var PID = "0bdac10f-7010-51d7-806c-2ca3c2ed6fda";
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('a, button, [role="button"]');
+    if(!el || el.closest('form')) return;
+    if(el.classList.contains('cta')) { e.preventDefault(); window.location.href = URL; return; }
+    if(el.closest('header nav, nav')) return;
+    var a = e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href') || '';
+    if(href.charAt(0) === '#') return;
+    if(/^[a-z][a-z0-9+.-]*:/i.test(href)) return;
+    if(href.indexOf('//') === 0) return;
+    e.preventDefault(); window.location.href = URL;
+  }, true);
+})();</script>
+<script>(function(){
+  var el = document.getElementById('kk-offre');
+  if(!el) return;
+  var PID = "0bdac10f-7010-51d7-806c-2ca3c2ed6fda";
+  var PRIX_L = "", PRIX_O = "";
+  var T_LAUNCH = "Votre aper\u00e7u expire dans \u003cb\u003e%TEMPS%\u003c/b\u003e \u2014 activez-le maintenant pour ne pas le perdre.", T_OVER = "Le d\u00e9ploiement est pass\u00e9 \u00e0 \u003cb\u003e%PRIX%\u003c/b\u003e";
+  var T_VIDE = "Aper\u00e7u de votre futur site";
+  function rendu(){
+    var fin = Date.parse(el.dataset.echeance || "2026-10-02T23:34:02Z");
+    if(!fin){ el.textContent = T_VIDE; return; }
+    var reste = Math.floor((fin - Date.now())/1000);
+    if(reste > 0){ var h=Math.floor(reste/3600), m=Math.floor((reste%3600)/60), s=reste%60;
+      var t = (h>0?(h+' h '):'') + (m<10?'0':'') + m + ' min ' + (s<10?'0':'') + s + ' s';
+      el.innerHTML = T_LAUNCH.replace('%PRIX%', PRIX_L).replace('%TEMPS%', t); }
+    else { el.innerHTML = (PRIX_O || PRIX_L)
+      ? T_OVER.replace('%PRIX%', PRIX_O || PRIX_L) : T_VIDE; }
+  }
+  rendu(); setInterval(rendu, 1000);
+})();</script>
+<!-- /kamkod:habillage -->
+<script>(function(){var s={"lead":"0bdac10f-7010-51d7-806c-2ca3c2ed6fda","page":"site","t0":Date.now(),"scroll":0};window.addEventListener("scroll",function(){var d=document.documentElement;var y=(typeof window.scrollY==="number")?window.scrollY:(d.scrollTop||document.body.scrollTop||0);var h=(d.scrollHeight||0)-window.innerHeight;s.scroll=Math.max(s.scroll,Math.round((h>0?y/h:0)*100));});var pal=[].slice.call(document.querySelectorAll("[data-palier]"));function maj(){var p=-1;for(var i=0;i<pal.length;i++){var r=pal[i].getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0){var n=parseInt(pal[i].getAttribute("data-palier"),10);if(!isNaN(n)&&n>p){p=n;}}}if(p>=0&&(s.prix_palier===undefined||p>s.prix_palier)){s.prix_palier=p;}}if(pal.length){window.addEventListener("scroll",maj,{passive:true});maj();}document.addEventListener("click",function(e){var c=(e.target&&e.target.closest)?e.target.closest("a.cta,button.cta,.cta"):null;if(c){s.cta_clics=(s.cta_clics||0)+1;}},true);window.addEventListener("pagehide",function(){s.ms=Date.now()-s.t0;try{navigator.sendBeacon("https://clic-v2.kamkod.com/api/comportement/",JSON.stringify(s));}catch(e){var x=new XMLHttpRequest();x.open("POST","https://clic-v2.kamkod.com/api/comportement/",true);x.send(JSON.stringify(s));}});})();</script></body>
+</html>
